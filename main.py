@@ -18,21 +18,26 @@ def play():
         if player.is_alive() and not player.victory:
             # displays possible actions and hotkeys based on current position
             if player.y > 0:
-                if (northloc.name != "desert" and northloc.name != "mountains"
-                    and northloc.name != "sea"):
-                    print("n - go north")
+                if northloc != None:
+                    if (northloc.name != "desert" and northloc.name
+                        != "mountains"
+                        and northloc.name != "sea"):
+                        print("n - go north")
             if player.x < 9:
-                if (eastloc.name != "desert" and eastloc.name != "mountains"
-                    and eastloc.name != "sea"):
-                    print("e - go east")
+                if eastloc != None:
+                    if (eastloc.name != "desert" and eastloc.name
+                        != "mountains" and eastloc.name != "sea"):
+                        print("e - go east")
             if player.y < 9:
-                if (southloc.name != "desert" and southloc.name != "mountains"
-                    and southloc.name != "sea"):
-                    print("s - go south")
+                if southloc != None:
+                    if (southloc.name != "desert" and southloc.name
+                        != "mountains" and southloc.name != "sea"):
+                        print("s - go south")
             if player.x > 0:
-                if (westloc.name != "desert" and westloc.name != "mountains"
-                    and westloc.name != "sea"):
-                    print("w - go west")
+                if westloc != None:
+                    if (westloc.name != "desert" and westloc.name
+                        != "mountains" and westloc.name != "sea"):
+                        print("w - go west")
             print("i - open inventory")
             print("m - open minimap")
             if player.hp < 100:
@@ -40,27 +45,45 @@ def play():
             print("q - quit")
             action_input = get_action()
             if action_input == "n" and player.y > 0:
-                if (northloc.name != "desert" and northloc.name != "mountains"
-                    and northloc.name != "sea"):
-                    player.move_north()
+                if northloc != None:
+                    if (northloc.name != "desert" and northloc.name
+                        != "mountains" and northloc.name != "sea"):
+                        player.move_north()
+                    else:
+                        print(f"""There is impassable {northloc.name}
+                        to the north.""")
                 else:
-                    print(f"There is impassable {northloc.name} to the north.")
+                    print("You can't go that way!")
             elif action_input == "e" and player.x < 9:
-                if (eastloc.name != "desert" and eastloc.name != "mountains"
-                    and eastloc.name != "sea"):
-                    player.move_east()
+                if eastloc != None:
+                    if (eastloc.name != "desert" and eastloc.name
+                        != "mountains" and eastloc.name != "sea"):
+                        player.move_east()
+                    else:
+                        print(f"""There is impassable {eastloc.name}
+                        to the east.""")
                 else:
-                    print(f"There is impassable {eastloc.name} to the east.")
+                    print("You can't go that way!")
             elif action_input == "s" and player.y < 9:
-                if (southloc.name != "desert" and southloc.name != "mountains"
-                    and southloc.name != "sea"):
-                    player.move_south()
+                if southloc != None:
+                    if (southloc.name != "desert" and southloc.name
+                        != "mountains" and southloc.name != "sea"):
+                        player.move_south()
+                    else:
+                        print(f"""There is impassable {southloc.name}
+                        to the south.""")
                 else:
-                    print(f"There is impassable {southloc.name} to the south.")
+                    print("You can't go that way!")
             elif action_input == "w" and player.x > 0:
-                if (westloc.name != "desert" and westloc.name != "mountains"
-                    and westloc.name != "sea"):
-                    player.move_west()
+                if westloc != None:
+                    if (westloc.name != "desert" and westloc.name
+                        != "mountains" and westloc.name != "sea"):
+                        player.move_west()
+                    else:
+                        print(f"""There is impassable {southloc.name}
+                        to the south.""")
+                else:
+                    print("You can't go that way!")
             elif action_input == "i":
                 player.print_inventory()
             elif action_input == "m":
@@ -70,7 +93,7 @@ def play():
             elif action_input == "h" and player.hp < 100:
                 player.heal()
             elif action_input == "q":
-                player.gameover()
+                player.check_gameover()
             else:
                 print("Invalid action")
         elif not player.is_alive():
@@ -83,8 +106,13 @@ def get_action():
     """Function for ease of returning player input for main actions."""
     return input("What would you like to do? ").lower()
 
+
 print("Welcome to the Dawn of Civilization!")
-print("It is the mid 16th century BCE in Mesopotamia.\n")
+print("It is the mid 16th century BCE in Mesopotamia.")
+print("""You are going to be a warrior and adventurer, travelling around the
+known world and trying to earn Gold and Prestige.""")
+print("""Along the way, you may find treasure, equipment, and enemies, and
+will be greeted with both good and bad events.\n""")
 print("Choose a starting location:")
 # write gamemap
 with open("minimap.txt") as file:

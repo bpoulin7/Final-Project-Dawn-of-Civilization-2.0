@@ -64,13 +64,16 @@ All notable changes to this project will be documented in this file
  - restricted "heal" option to only be available when hp is not already full
  - added remaining location descriptions
 
-## 0.0.12 - 01/06/2023
+## 0.0.12 - 01/06/2023 (Alpha)
 
  - moved minimap to external file to be written in
 
-## todo ##
+## 0.1.0 - 01/06/2023 (Post Alpha)
 
- - fix bow and arrow mechanic
-   - have arrows be consumed by using bow in combat
- - armor
- - (incorporate text descriptions for items?)
+ - fixed error caused by being in location next to map border
+ - fixed formatting in items, map, and player modules and main file
+ - removed ability to heal in battle
+ - converted all multiplied and divided gold and prestige values into integers
+ - removed placeholder answer in "Bridgekeeper" event question
+ - added more information in starting text
+ - added function to allow player to confirm exit game

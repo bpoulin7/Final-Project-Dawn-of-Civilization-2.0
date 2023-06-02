@@ -5,10 +5,10 @@ import random
 
 
 class Player:
-    """Contains inventory, hp, location, movement, and actions."""
+    """Contains inventory, hp, location, movement, actions, and events."""
 
     def __init__(self, x, y):
-        self.inventory = [items.Spear(), items.Food(), items.Bow(), items.Arrow(), items.Arrow(), items.Armor()]
+        self.inventory = [items.Spear(), items.Food(), items.Bow(), items.Arrow(), items.Arrow(), items.Armor(), items.Shield()]
         self.gold = 0
         # starts with no items and no gold
         self.prestige = 0
@@ -17,9 +17,8 @@ class Player:
         # starts with full health
         self.x = x
         self.y = y
-        # starts in Ur, location [5,4]
         self.victory = False
-  
+
     def is_alive(self):
         """Displays whether player has any remaining health points."""
         return self.hp > 0
@@ -139,9 +138,20 @@ class Player:
     def move_west(self):
         """Defines player movement left/west."""
         self.move(dx=-1, dy=0)
+
+    def check_gameover(self):
+      """Function to allow player confirmation to quit game."""
+      check = input("Are you sure you want to exit game? ").lower()
+      if check == "yes" or check == "y":
+          self.gameover()
+      elif check != "no" and check != "n":
+          print("Invalid input")
+          self.check_gameover()
   
     def gameover(self):
-        """Function for ending game (victory or loss). Displays final score."""
+        """Function for ending game (victory or loss).
+        Displays final score.
+        """
         print("\nGame Over!")
         print(f"Gold: {self.gold}")
         print(f"Prestige: {self.prestige}")
@@ -177,10 +187,9 @@ class Player:
   
     def battle(self, enemy):
         """Battle against enemies"""
-        battle_options = ["a", "d", "f", "h", "q"]
+        battle_options = ["a", "d", "f", "q"]
         print("a - attack")
         print("d - defend")
-        print("h - heal")
         print("f - flee")
         print("q - quit game")
         battle_action = input("What do you want to do? ").lower()
@@ -191,16 +200,12 @@ class Player:
                 self.defend(enemy)
             elif battle_action == "f":
                 self.flee(enemy)
-            elif battle_action == "h":
-                self.heal()
-                self.enemy_attack(enemy)
             elif battle_action == "q":
-                self.gameover()
+                self.check_gameover()
         else:
             print("Invalid choice! Try again.")
             self.battle(enemy)
         
-
     def enemy_attack(self, enemy):
         """Attack from enemy."""
         if items.Armor in self.inventory:
@@ -215,7 +220,8 @@ class Player:
   
     def attack(self, enemy):
         """Deal damage to enemies."""
-        weapons = [item for item in self.inventory if isinstance(item, items.Weapon)]
+        weapons = [item for item in self.inventory if
+                   isinstance(item, items.Weapon)]
         if not weapons:
             print("\nYou don't have any weapons!")
             self.flee(enemy)
@@ -262,7 +268,7 @@ class Player:
     def flee(self, enemy):
         print("\nRun away!")
         print("Lose 50% prestige.")
-        self.prestige = self.prestige / 2
+        self.prestige = int(self.prestige / 2)
 
 # Functions for events # -----------------------------------------------------
   
@@ -274,18 +280,19 @@ class Player:
         print("3 - I don't care. (lose 25% prestige)")
         playerinput = input("")
         if playerinput == "1":
-            self.hp -= (0.25 * self.hp)
+            self.hp -= int(0.25 * self.hp)
         elif playerinput == "2":
-            self.gold -= (0.25 * self.gold)
+            self.gold -= int(0.25 * self.gold)
         elif playerinput == "3":
-            self.prestige -= (0.25 * self.prestige)
+            self.prestige -= int(0.25 * self.prestige)
         else:
             print("Invalid choice!")
             self.comet_event()
 
     def bridgekeeper_event(self):
         print("\nThe Bridgekeeper")
-        print("In order to cross a bridge on your path, you must answer the bridgekeeper's question.")
+        print("""In order to cross a bridge on your path, you must answer
+        the bridgekeeper's question.""")
         question = random.random()
         if question <= 0.25:
             answer = input("'What... is the capital of Assyria?' ").lower()
@@ -293,17 +300,16 @@ class Player:
                 print("Correct! You are free to cross the bridge.")
             else:
                 print("Incorrect! Lose 50% health.")
-                self.hp = self.hp * 0.5
+                self.hp = int(self.hp * 0.5)
         elif question <= 0.5:
-            answer = input("'What... is the flight speed of an unladen swallow?' ")
+            answer = input("""'What... is the flight speed of an unladen
+            swallow?' """)
             if "European" in answer and "African" in answer:
                 print("'Well I don't know...'")
                 print("You are free to cross the bridge.")
-            elif answer == "speed":
-                print("Correct! You are free to cross the bridge.")
             else:
                 print("Incorrect! Lose 50% health.")
-                self.hp = self.hp * 0.5
+                self.hp = int(self.hp * 0.5)
         elif question <= 0.75:
             answer = input("'What... is your favourite color?' ")
             print("Correct! You are free to cross the bridge.")
@@ -313,7 +319,7 @@ class Player:
                 print("Correct! You are free to cross the bridge.")
             else:
                 print("Incorrect! Lose 50% health.")
-                self.hp = self.hp * 0.5
+                self.hp = int(self.hp * 0.5)
 
     def good_reputation_event(self):
         print("\nGood Reputation")
@@ -329,6 +335,7 @@ class Player:
 
     def generous_donation_event(self):
         print("\nA Generous Donation")
-        print(f"The {player.allegiance.adjective} ruler has decided to fund your excursion.")
+        print(f"""The {self.allegiance.adjective} ruler has decided to fund
+        your excursion.""")
         print("Gain 50% gold!")
-        self.gold = self.gold * 1.5
+        self.gold = int(self.gold * 1.5)

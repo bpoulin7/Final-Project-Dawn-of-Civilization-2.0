@@ -1,3 +1,5 @@
+# Items module - contains all items that can be stored in player's inventory
+
 
 class Item:
     """An item that can be put into a player's inventory."""
