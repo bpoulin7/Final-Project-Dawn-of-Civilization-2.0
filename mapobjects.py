@@ -38,6 +38,3 @@ class Chest:
         elif x < 1.00:
             self.loot = items.Medicine()
         return self.loot
-        # occasionally add more items
-        if (x * 100) % 2 == 0:
-            self.random_loot()

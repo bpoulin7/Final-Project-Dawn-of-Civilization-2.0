@@ -8,7 +8,9 @@ class Player:
     """Contains inventory, hp, location, movement, actions, and events."""
 
     def __init__(self, x, y):
-        self.inventory = [items.Spear(), items.Food(), items.Bow(), items.Arrow(), items.Arrow(), items.Armor(), items.Shield()]
+        self.inventory = [items.Spear(), items.Food(), items.Bow(),
+                          items.Arrow(), items.Arrow(), items.Armor(),
+                          items.Shield()]
         self.gold = 0
         # starts with no items and no gold
         self.prestige = 0
@@ -189,7 +191,8 @@ class Player:
         """Battle against enemies"""
         battle_options = ["a", "d", "f", "q"]
         print("a - attack")
-        print("d - defend")
+        if items.Shield() in self.inventory:
+            print("d - defend")
         print("f - flee")
         print("q - quit game")
         battle_action = input("What do you want to do? ").lower()
@@ -197,7 +200,11 @@ class Player:
             if battle_action == "a":
                 self.attack(enemy)
             elif battle_action == "d":
-                self.defend(enemy)
+                if items.Shield() in self.inventory:
+                    self.defend(enemy)
+                else:
+                    print("You don't have a shield!")
+                    self.battle(enemy)
             elif battle_action == "f":
                 self.flee(enemy)
             elif battle_action == "q":
@@ -208,8 +215,8 @@ class Player:
         
     def enemy_attack(self, enemy):
         """Attack from enemy."""
-        if items.Armor in self.inventory:
-            self.hp += items.Armor.protection
+        if items.Armor() in self.inventory:
+            self.hp += items.Armor().protection
         self.hp -= enemy.damage
         print(f"\n{enemy.name.title()} attacked!")
         if not self.is_alive():
@@ -233,7 +240,8 @@ class Player:
             try:
                 to_use = weapons[int(choice) - 1]
                 if to_use == items.Bow():
-                    arrows = [item for item in self.inventory if isinstance(items.Arrow)]
+                    arrows = [item for item in self.inventory
+                              if isinstance(items.Arrow)]
                     if not arrows:
                         print("You don't have any arrows!")
                     else:
@@ -258,11 +266,7 @@ class Player:
                 self.enemy_attack(enemy)
 
     def defend(self, enemy):
-        protection = [item for item in self.inventory if isinstance(item, items.Shield)]
-        if not protection:
-            print("\nYou don't have a shield!")
-        else:
-            self.hp = min(100, self.hp + items.Shield.protection)
+        self.hp = min(100, self.hp + items.Shield().protection)
         self.enemy_attack(enemy)
 
     def flee(self, enemy):
@@ -274,7 +278,8 @@ class Player:
   
     def comet_event(self):
         print("\nComet Sighted!")
-        print("A streak of light flashes across the night sky. What does this mean?")
+        print("A streak of light flashes across the night sky.")
+        print("What does this mean?")
         print("\n1 - It's an omen! (lose 25% health points)")
         print("2 - Send gold to appease the comet! (lose 25% gold)")
         print("3 - I don't care. (lose 25% prestige)")

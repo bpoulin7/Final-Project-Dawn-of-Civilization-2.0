@@ -68,7 +68,7 @@ All notable changes to this project will be documented in this file
 
  - moved minimap to external file to be written in
 
-## 0.1.0 - 01/06/2023 (Post Alpha)
+## 0.1.0 - 01/06/2023 (Post-Alpha)
 
  - fixed error caused by being in location next to map border
  - fixed formatting in items, map, and player modules and main file
@@ -77,3 +77,17 @@ All notable changes to this project will be documented in this file
  - removed placeholder answer in "Bridgekeeper" event question
  - added more information in starting text
  - added function to allow player to confirm exit game
+
+## 0.1.1 - 02/06/2023 (Pre-Beta)
+
+ - prevented use of shield in combat if player does not have one
+ - removed potential for loot chests to have more than one item
+ - added header
+
+## todo before final release
+
+ - prevent duplicate items in inventory
+ - require arrows to be consumed for bow to work
+ - have armor reduce damage received from enemies
+ - add remaining events
+ - fix unclear "None" after starting inventory

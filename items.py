@@ -10,11 +10,13 @@ class Item:
     def __str__(self):
         return self.name
 
+
 class Weapon(Item):
     """An item that deals damage to enemies in combat."""
   
     def __init__(self):
         self.damage = 0
+
 
 class Spear(Weapon):
     """A weapon that does 25 damage."""
@@ -24,6 +26,7 @@ class Spear(Weapon):
         self.name = "spear"
         self.desc = "a basic hand-held weapon"
 
+
 class Dagger(Weapon):
     """A weapon that does 50 damage."""
   
@@ -32,6 +35,7 @@ class Dagger(Weapon):
         self.name = "dagger"
         self.desc = "a rare hand-held weapon"
 
+
 class Bow(Weapon):
     """A weapon that requires arrows for input and does 10 damage."""
     def __init__(self):
@@ -39,11 +43,13 @@ class Bow(Weapon):
         self.name = "bow"
         self.desc = "a long-range weapon that requires arrows to work"
 
+
 class Protection(Item):
     """An item that reduces damage dealt by enemies in combat."""
   
     def __init__(self):
         self.protection = 0
+
 
 class Shield(Protection):
     """A protection item that lowers damage by 20."""
@@ -53,6 +59,7 @@ class Shield(Protection):
         self.name = "shield"
         self.desc = "a basic hand-held defense"
 
+
 class Armor(Protection):
     """A protection item that permanently lowers damage by 45."""
   
@@ -61,11 +68,13 @@ class Armor(Protection):
         self.name = "armor"
         self.desc = "a rare full-body defense"
 
+
 class Healing(Item):
     """An item that increases the player's hp."""
   
     def __init__(self):
         self.healing = 0
+
 
 class Food(Healing):
     """A healing item that recovers 10 hp."""
@@ -74,6 +83,7 @@ class Food(Healing):
         self.healing = 10
         self.name = "food"
         self.desc = "rations to restore some hp"
+
 
 class Medicine(Healing):
     """A healing item that recovers 25 hp."""

@@ -11,9 +11,11 @@ This will be a successor to the same coding project worked on all semester: a Py
    - cities belong to certain empires, whose allegiances are important
    - player gets to choose starting location
    - traversing mountains and deserts is very difficult
+     - *edit - traversing mountains and deserts is impossible*
    - scope at least from the Levant (W) to the Caucasus (N) to Persia (E) to Arabia (S)
  - various objects to be found across the map
    - loot chests, markets, oases, etc.
+     - *edit - only loot chests*
  - various types of items to be found as loot
    - at least weapons, protection, and healing (consumables)
  - enemies and allies to be encountered around the map

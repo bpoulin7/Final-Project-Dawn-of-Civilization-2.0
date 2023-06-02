@@ -1,4 +1,14 @@
-import map, items, player, characters
+# -------------------------------------------------------------------------- #
+# Ben P
+# 02/06/2023
+# version 0.1.1
+# -------------------------------------------------------------------------- #
+"""A text-based adventure game set in the ancient Near East, where the goal
+is to accumulate gold and prestige while staying alive.
+"""
+# -------------------------------------------------------------------------- #
+import map, player
+
 
 def play():
     """Function that contains all gameplay."""
@@ -10,7 +20,7 @@ def play():
             currloc.name == "sea"):
             print(f"\n{currloc.desc}")
         else:
-            print(f"\nYou are in {currloc.__str__().title()}, {currloc.desc}")
+            print(f"\nYou're in {currloc.__str__().title()}, {currloc.desc}")
         northloc = map.location(player.x, player.y - 1)
         eastloc = map.location(player.x + 1, player.y)
         southloc = map.location(player.x, player.y + 1)
