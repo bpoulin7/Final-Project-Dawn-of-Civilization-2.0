@@ -21,7 +21,7 @@ class Chest:
             self.loot = "gold"
         # find common items 37.5% of the time
         elif x < 0.59375:
-            self.loot = items.Arrow()
+            self.loot = "arrow"
         elif x < 0.6875:
             self.loot = items.Spear()
         elif x < 0.78125:

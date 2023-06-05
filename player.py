@@ -9,8 +9,8 @@ class Player:
 
     def __init__(self, x, y):
         self.inventory = [items.Spear(), items.Food(), items.Bow(),
-                          items.Arrow(), items.Arrow(), items.Armor(),
-                          items.Shield()]
+                          items.Armor(), items.Shield()]
+        self.arrows = 0
         self.gold = 0
         # starts with no items and no gold
         self.prestige = 0
@@ -31,6 +31,7 @@ class Player:
         if self.inventory:
             for item in self.inventory:
                 print(f" - {item}")
+            print(f" - arrow x{self.arrows}")
         else:
             print("You don't have anything in your inventory!")
         print(f"Gold: {self.gold}")
@@ -49,9 +50,18 @@ class Player:
                 g = int(random.random() * 100)
                 self.gold = self.gold + g
                 print(f"\nYou found {g} gold!")
-            else:
+            elif new_item == "arrow":
+                self.arrows += 1
+                print("\nYou found an arrow!")
+            elif new_item == items.Food() or new_item == items.Medicine(): # not working
+                print(f"\nYou found {new_item.__str__()}!")
                 self.inventory.append(new_item)
+            elif new_item in self.inventory: # not working
                 print(f"\nYou found a {new_item.__str__()}!")
+                print("You've already got one!")
+            else:
+                print(f"\nYou found a {new_item.__str__()}!")
+                self.inventory.append(new_item)
         elif collect_input == "n" or collect_input == "no":
             return
         else:
@@ -82,13 +92,13 @@ class Player:
         elif r <= 0.75:
             self.generous_donation_event()
         elif r <= 0.8:
-            return # TBA
+            self.royal_decree_event()
         elif r <= 0.85:
-            return # TBA
+            self.broken_item_event()
         elif r <= 0.9:
-            return # TBA
+            self.the_chasm_event()
         elif r <= 0.95:
-            return # TBA
+            self.disease_event()
         elif r < 1:
             return # TBA
 
@@ -191,7 +201,7 @@ class Player:
         """Battle against enemies"""
         battle_options = ["a", "d", "f", "q"]
         print("a - attack")
-        if items.Shield() in self.inventory:
+        if items.Shield() in self.inventory: # not working
             print("d - defend")
         print("f - flee")
         print("q - quit game")
@@ -239,15 +249,12 @@ class Player:
             choice = input("")
             try:
                 to_use = weapons[int(choice) - 1]
-                if to_use == items.Bow():
-                    arrows = [item for item in self.inventory
-                              if isinstance(items.Arrow)]
-                    if not arrows:
+                if to_use == items.Bow(): # not working
+                    if self.arrows == 0:
                         print("You don't have any arrows!")
                     else:
-                        to_shoot = arrows[1]
-                        self.inventory.remove(to_shoot)
-                        enemy.hp -= to_use.damage
+                        self.arrows -= 1
+                        enemy.hp -= items.Bow().damage
                         if not enemy.is_alive():
                             print("\nVictory! Gain 25 prestige.")
                             self.prestige += 25
@@ -296,8 +303,8 @@ class Player:
 
     def bridgekeeper_event(self):
         print("\nThe Bridgekeeper")
-        print("""In order to cross a bridge on your path, you must answer
-        the bridgekeeper's question.""")
+        print("In order to cross a bridge on your path, you must answer")
+        print("the bridgekeeper's question.")
         question = random.random()
         if question <= 0.25:
             answer = input("'What... is the capital of Assyria?' ").lower()
@@ -307,8 +314,7 @@ class Player:
                 print("Incorrect! Lose 50% health.")
                 self.hp = int(self.hp * 0.5)
         elif question <= 0.5:
-            answer = input("""'What... is the flight speed of an unladen
-            swallow?' """)
+            answer = input("""'What... is the flight speed of a swallow?' """)
             if "European" in answer and "African" in answer:
                 print("'Well I don't know...'")
                 print("You are free to cross the bridge.")
@@ -336,11 +342,85 @@ class Player:
         print("\nBad Reputation")
         print("Word has gotten around about you - and it's not good.")
         print("Lose 10 prestige.")
-        self.prestige -= 10
+        self.prestige = max(0, self.prestige - 10)
 
     def generous_donation_event(self):
         print("\nA Generous Donation")
-        print(f"""The {self.allegiance.adjective} ruler has decided to fund
-        your excursion.""")
+        print(f"The {self.allegiance.adjective} ruler has decided")
+        print("to fund your excursion.")
         print("Gain 50% gold!")
         self.gold = int(self.gold * 1.5)
+
+    def royal_decree_event(self):
+        print("\nRoyal Decree")
+        print(f"The {self.allegiance.adjective} ruler has decided")
+        print("to revoke funding from your excursion.")
+        print("Lose 50% gold.")
+        self.gold = int(self.gold / 2)
+  
+    def broken_item_event(self):
+        item = self.inventory[0]
+        print(f"\nBroken {item}!")
+        print(f"Oh no! You tripped and broke your {item}!")
+        self.inventory.remove(item)
+
+    def the_chasm_event(self):
+        print("\nThe Chasm")
+        print("A ravine stands between you and your destination.")
+        print("What do you do?")
+        print("\n1 - Find a bridge across")
+        print("2 - Who needs a bridge?")
+        playerinput = input("")
+        if playerinput == "1":
+            print("You successfully found a bridge,")
+            print("but your prestige has taken a hit.")
+            print("Lose 10 prestige.")
+            self.prestige = max(0, self.prestige - 10)
+        elif playerinput == "2":
+            chance = random.random()
+            if chance < 0.5:
+                print("Oh no! You have fallen and injured yourself.")
+                print("Lose 30 hp and 15 prestige.")
+                self.hp = max(0, self.hp - 30)
+                self.prestige = max(0, self.prestige - 15)
+            elif chance < 0.95:
+                print("By some miracle, you made it across unscathed.")
+                print("Gain 50 prestige!")
+                self.prestige += 50
+            else:
+                print("Oh no! You have fallen from a fatal height!")
+                self.gameover()
+        else:
+            print("Invalid choice!")
+            self.the_chasm_event()
+
+    def disease_event(self):
+        print("\nDisease")
+        print("It seems an epidemic was sweeping through the area.")
+        print("Lose 50% hp.")
+        self.hp = int(self.hp / 2)
+
+    def the_river_event(self):
+        print("\nThe River")
+        print("A river stands between you and your destination.")
+        print("What do you do?")
+        print("\n1 - Find a bridge across")
+        print("2 - Who needs a bridge?")
+        playerinput = input("")
+        if playerinput == "1":
+            print("You successfully found a bridge,")
+            print("but your prestige has taken a hit.")
+            print("Lose 10 prestige.")
+            self.prestige = max(0, self.prestige - 10)
+        elif playerinput == "2":
+            chance = random.random()
+            if chance < 0.5:
+                print("Oh no! You have fallen and been swept into the river!")
+                self.gameover()
+            else:
+                print("By some miracle, you made it across unscathed.")
+                print("Gain 50 prestige!")
+                self.prestige += 50
+        else:
+            print("Invalid choice!")
+            self.the_river_event()

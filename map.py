@@ -243,7 +243,7 @@ susa.desc = """the northern of the two Elamite cities, considered an imposter
 by its southern competitor"""
 
 warashi = Location(8, 6)
-warashi.name = "Warahshi"
+warashi.name = "Warashi"
 warashi.owner = elamites
 warashi.desc = """an enigmatic region on the eastern edge of civilization,
 perhaps connected to Central Asia"""

@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------- #
 # Ben P
-# 02/06/2023
-# version 0.1.1
+# 04/06/2023
+# version 0.1.2
 # -------------------------------------------------------------------------- #
 """A text-based adventure game set in the ancient Near East, where the goal
 is to accumulate gold and prestige while staying alive.
@@ -90,7 +90,7 @@ def play():
                         != "mountains" and westloc.name != "sea"):
                         player.move_west()
                     else:
-                        print(f"""There is impassable {southloc.name}
+                        print(f"""There is impassable {westloc.name}
                         to the south.""")
                 else:
                     print("You can't go that way!")
@@ -222,7 +222,7 @@ while not selected:
     elif startloc == "susa":
         player = player.Player(7, 6)
         selected = True
-    elif startloc == "warhashi":
+    elif startloc == "warashi":
         player = player.Player(8, 6)
         selected = True
     elif startloc == "heliopolis":

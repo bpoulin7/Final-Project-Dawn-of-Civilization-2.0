@@ -68,7 +68,7 @@ All notable changes to this project will be documented in this file
 
  - moved minimap to external file to be written in
 
-## 0.1.0 - 01/06/2023 (Post-Alpha)
+## 0.1.0 - 01/06/2023
 
  - fixed error caused by being in location next to map border
  - fixed formatting in items, map, and player modules and main file
@@ -78,16 +78,24 @@ All notable changes to this project will be documented in this file
  - added more information in starting text
  - added function to allow player to confirm exit game
 
-## 0.1.1 - 02/06/2023 (Pre-Beta)
+## 0.1.1 - 02/06/2023
 
  - prevented use of shield in combat if player does not have one
  - removed potential for loot chests to have more than one item
- - added header
+ - added header to main file
+
+## 0.1.2 - 03-04/06/2023
+
+ - fixed more formatting in console output
+ - attempted to prevent duplicate items in inventory
+ - changed Arrows from class to integer value
+ - added "Broken Item", "Royal Decree", "The Chasm", "Disease", and "The River" events
+ - fixed west movement function having references to "south"
+ - prevented hp and prestige values from dropping below 0
 
 ## todo before final release
 
  - prevent duplicate items in inventory
  - require arrows to be consumed for bow to work
  - have armor reduce damage received from enemies
- - add remaining events
  - fix unclear "None" after starting inventory
