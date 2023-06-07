@@ -92,11 +92,3 @@ class Medicine(Healing):
         self.healing = 25
         self.name = "medicine"
         self.desc = "medicine to restore hp"
-
-
-class Arrow(Item):
-    """Ammo for bows."""
-  
-    def __init__(self):
-        self.name = "arrow"
-        self.desc = "ammo for a bow"

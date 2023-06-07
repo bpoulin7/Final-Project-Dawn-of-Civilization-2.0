@@ -37,7 +37,7 @@ All notable changes to this project will be documented in this file
 
 ## 0.0.8 - 27/05/2023
 
- - added *play* function
+ - added `play` function
  - added some missing locations and descriptions
 
 ## 0.0.9 - 29/05/2023
@@ -48,7 +48,7 @@ All notable changes to this project will be documented in this file
 ## 0.0.10 - 30/05/2023
 
  - added remainder of of battle gameplay
- - moved *game over* function from main to player module
+ - moved `game over` function from main to player module
  - fixed bug in heal menu that prevented healing items from being selected
  - decided to avoid adding special gameplay to escape deserts
    - instead modified movement functions to completely prevent movement into desert, mountain, or sea tiles
@@ -93,9 +93,22 @@ All notable changes to this project will be documented in this file
  - fixed west movement function having references to "south"
  - prevented hp and prestige values from dropping below 0
 
-## todo before final release
+## 0.1.3 - 05/06/2023
 
- - prevent duplicate items in inventory
- - require arrows to be consumed for bow to work
- - have armor reduce damage received from enemies
- - fix unclear "None" after starting inventory
+ - complete fix of formatting
+ - added comments where necessary
+ - fixed another reference to "south" in west movement function
+ - fixed incorrect coordinates of Kurigalzu and Eshnunna in starting location selection
+ - fixed food and medicine not being recognized as stackable items
+
+## 0.1.4 - 06/06/2023
+
+ - added compass, border, legend, and title to minimap
+ - used concatenation to resolve some text strings being too long
+ - fixed bug that prevented "defend" option from appearing in battle menu
+ - fixed bug that allowed defending to result in a net increase of hp
+   - removed `enemy_attack` function, incorporated into `attack` and `defend`
+ - fixed code to prevent duplicate items other than food and medicine
+ - fixed code to get bows to consume arrows upon use
+ - added damage reduction when armor is in inventory
+ - made sure no events or battles can occur if hp reaches 0 before the play loop ends

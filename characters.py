@@ -37,7 +37,7 @@ class Mercenary(Enemy):
 
     def __init__(self):
         self.name = "mercenary"
-        self.hp = 100
+        self.hp = 200
         self.damage = 50
 
 

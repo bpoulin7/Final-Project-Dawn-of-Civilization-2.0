@@ -1,5 +1,4 @@
 # Map Objects module - contains all inanimate entities to be encountered
-
 import items
 import random
 
